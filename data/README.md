@@ -29,5 +29,5 @@ Overseas French territories are considered not connected to any other French dep
 
 ## Synthetic example
 
-Synthetic piecewise linear reproduction coefficient of length T = 300 used as ground truth in Section IV of the paper:
+Synthetic piecewise linear reproduction coefficient X of length T = 300 and initial condition Y0  used to generate the synthetic nonstationary autoregressive Poisson time series considered in Section IV of the paper:
 > Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a Nonstationary Autoregressive Model for Data-Driven Reproduction Number Estimation. *arXiv preprint*. [arXiv:]().
