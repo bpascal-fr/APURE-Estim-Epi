@@ -7,7 +7,7 @@
 % and August 3, 2022, corresponding to T = 300 days.
 %
 %
-% From
+% References:
 %
 % - Du, J., Pascal, B., & Abry, P. (2023). Performances comparées
 % d’estimateurs du coefficient de reproduction de la Covid19 à l’aide de

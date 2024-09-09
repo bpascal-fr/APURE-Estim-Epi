@@ -10,7 +10,7 @@
 % mean 6.6 days and standard deviation 3.5 days cropped at tau = 25 days.
 %
 %
-% from
+% References:
 %
 % - Du, J., Pascal, B., & Abry, P. (2023). Performances comparées
 % d’estimateurs du coefficient de reproduction de la Covid19 à l’aide de
@@ -24,7 +24,7 @@
 % B. Pascal, S. Vaiter and P. Abry, September 2024.
 
 
-function [Y, Psi, M] = generate_synthetic_Poisson(X, opts)
+function [Y, Psi_Y, M] = generate_synthetic_Poisson(X, opts)
 
     % Inputs: - X: ground truth reproduction coefficient vector of size 1 x T (trivial: ones(1,T))
     %         - opts: parameters of the model, structure containing
@@ -32,15 +32,17 @@ function [Y, Psi, M] = generate_synthetic_Poisson(X, opts)
     %                   opts.alpha: scale parameter of the Poisson model (default: 1, corresponding to usual Poisson distribution)
     %                   opts.FontSize: font size in the plots (default FontSize = 22.5)
     %                   opts.Dates: abstract dates in datetime format for display
-    %                   opts.Psi: discretized serial interval function to be used (default: daily discretized Covid19 serial interval function)
+    %                   opts.Psi: coefficients of the linear memory functions (default: daily discretized Covid19 serial interval function)
     %
     %
     % Outputs: - Y: synthetic nonstationary autoregressive Poisson time series with linear memory functions
-    %          - YPsi: memory functions evaluated in the time series realization
+    %          - Psi_Y: memory functions evaluated in the time series realization
     %          - M: model parameters, structure containing
     %                   M.Y0: initial observation
     %                   M.Y_SY: synthetic observations including the initial observation
-    %                   M.Psi: discretized serial interval function
+    %                   M.Psi: coefficients of the linear memory functions
+    %                   M.alpha: scale parameter of the Poisson model
+    %                   M.Dates: abstract dates in datetime format for display
     %                   M.flag: name of the model for display (SP)
 
     if nargin < 2
@@ -94,30 +96,30 @@ function [Y, Psi, M] = generate_synthetic_Poisson(X, opts)
             Psi = reshape(opts.Psi,1,tau+1);
         end
     end
-    Psi     = Psi/sum(Psi);             % normalize the serial interval function (optional)
-    fPsi    = fliplr(Psi);
+    Psi     = Psi/sum(Psi);             % normalize the memory function (optional)
+    fPsi    = fliplr(Psi(2:end));
 
     % Prepare synthetic time series
     T       = length(X);
     Y_SY    = zeros(1,T+1);
     Y_SY(1) = Y0;
-    YPsi    = zeros(1,T);
+    Psi_Y   = zeros(1,T);
 
     % Threshold to enforce positive Poisson intensity
     Thr     = 3;
-
+    
     % Generate synthetic observations recursively
     for t = 2:T+1
 
         if t < tau+2
             tPsi      = Psi(2:t)./sum(Psi(2:t));
-            tZ        = fliplr(Y_SY(1:t-1));
-            YPsi(t-1) = sum(tZ.*tPsi);
+            tY        = fliplr(Y_SY(1:t-1));
+            Psi_Y(t-1) = sum(tY.*tPsi);
         else
-            YPsi(t-1) = sum(Y_SY(t-tau-1:t-1).*fPsi);
+            Psi_Y(t-1) = sum(Y_SY(t-tau:t-1).*fPsi);
         end
 
-        P_sy    = X(t-1)*YPsi(t-1);
+        P_sy    = X(t-1)*Psi_Y(t-1);
         P_sy    = max(P_sy,Thr)/alpha;
         Y_SY(t) = alpha*random('Poisson',P_sy);
 
@@ -127,17 +129,19 @@ function [Y, Psi, M] = generate_synthetic_Poisson(X, opts)
     Y           = Y_SY(2:end);
 
     % Store model parameters
-    M.Y0       = Y0;
-    M.Z_SY     = Y_SY;
-    M.Psi      = Psi;
-    M.flag     = 'SP';
+    M.Y0       = Y0 ;
+    M.Y_SY     = Y_SY ;
+    M.Psi      = Psi ;
+    M.alpha    = alpha ;
+    M.Dates    = Dates ;
+    M.flag     = 'SP' ;
 
     %% DISPLAY SYNTHETIC COUNTS
 
     f2              = figure(2); clf
     p               = plot(Dates, Y,'-','linewidth',2,'color','black') ;
     grid on ; hold on
-    q               = plot(Dates, YPsi,'-.','linewidth',2,'color','black') ;
+    q               = plot(Dates, Psi_Y,'-.','linewidth',2,'color','black') ;
     leg             = legend([p,q],'$\mathrm{Y}_t$','$\Psi_t(Y)$','location','best');
     leg.Interpreter = 'Latex';
     leg.Color       = 'none';
