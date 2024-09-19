@@ -18,7 +18,7 @@
 % Nonstationary Autoregressive Model for Data-Driven Reproduction Number
 % Estimation. Preprint. arXiv:.
 %
-% B. Pascal, S. Vaiter and P. Abry, September 2024.
+% B. Pascal and S. Vaiter, September 2024.
 
 function [X, Y0] = synthetic_example(FontSize)
 
@@ -39,7 +39,7 @@ function [X, Y0] = synthetic_example(FontSize)
     %% DISPLAY THE REPRODUCTION COEFFICIENT WITH INDICATION OF Xt > 1
 
     % Color of the curve
-    royal           = [0.2549019607843137, 0.4117647058823529, 0.8823529411764706];
+    royal           = [0.2549019607843137, 0.4117647058823529, 0.8823529411764706] ;
 
     % Display
     f1 = figure(1); clf
@@ -58,7 +58,7 @@ function [X, Y0] = synthetic_example(FontSize)
     title('Piecewise linear reproduction coefficient with exponential growth periods','Interpreter','Latex')
     xlim([1,300])
     ylim([0,2])
-    set(gca,'fontsize',20,'ticklabelinterpreter','latex')
+    set(gca,'FontSize',FontSize,'ticklabelinterpreter','latex')
     f1.Position     = [141 329 1033 314];
 
 end

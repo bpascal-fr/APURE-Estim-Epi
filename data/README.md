@@ -18,15 +18,6 @@ Reported new cases in all French departments collected by Regional Health Agenci
 
 `Covid_French_Departments_stored.csv` downloaded from [Santé Publique France repository](https://www.data.gouv.fr/fr/datasets/r/426bab53-e3f5-4c6a-9d54-dba4442b3dbc) on *March 31, 2024*.
 
-## French departments connectivity
-
-The multivariate, spatially regularized, reproduction number estimators rely on a prior spatial connectivity pattern. 
-In the present work, French departments are considered connected if they share a terrestrial border, which has been encoded manually by the contributors in
-
-> `French_Contiguous_Departments.mat`: adjacency matrix encoding the contiguity of the 96 French metropolitan departments.
-
-Overseas French territories are considered not connected to any other French department.
-
 ## Synthetic example
 
 Synthetic piecewise linear reproduction coefficient X of length T = 300 and initial condition Y0  used to generate the synthetic nonstationary autoregressive Poisson time series considered in Section IV of the paper:

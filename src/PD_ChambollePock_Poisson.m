@@ -26,7 +26,7 @@
 % March 2024
 
 
-function [x,obj,incr]=PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
+function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
 
 
     % Inputs:  - Y: observed corrupted data
@@ -99,7 +99,7 @@ function [x,obj,incr]=PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
         % Store the reproduction number for computing increments
         if strcmp(opts.incr,'var')
 
-            Rm = x(:,1:size(Y,2));
+            Xm = x(:,1:size(Y,2));
 
         end
 
@@ -148,14 +148,14 @@ function [x,obj,incr]=PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
             else
 
                 R             = x(:,1:size(Y,2));
-                if isempty(find(Rm(:) > 0,1))
+                if isempty(find(Xm(:) > 0,1))
                     if i == 2
                         tinc(i-1) = incrc;
                     else
                         tinc(i-1) = tinc(i-2);
                     end
                 else
-                    tinc(i-1)     = max(abs(Rm(Rm(:) > 0)-R(Rm(:) > 0))./max(1e-2,Rm(Rm(:) > 0)));
+                    tinc(i-1)     = max(abs(Xm(Xm(:) > 0)-R(Xm(:) > 0))./max(1e-2,Xm(Xm(:) > 0)));
                 end
 
                 if strcmp(opts.stop,'Primal')

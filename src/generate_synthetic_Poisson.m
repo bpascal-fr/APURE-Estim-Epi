@@ -21,29 +21,29 @@
 % Nonstationary Autoregressive Model for Data-Driven Reproduction Number
 % Estimation. Preprint. arXiv:.
 %
-% B. Pascal, S. Vaiter and P. Abry, September 2024.
+% B. Pascal and S. Vaiter, September 2024.
 
 
-function [Y, Psi_Y, M] = generate_synthetic_Poisson(X, opts)
+function [Y, Psi_Y, M] = generate_synthetic_Poisson(X, sett)
 
     % Inputs: - X: ground truth reproduction coefficient vector of size 1 x T (trivial: ones(1,T))
-    %         - opts: parameters of the model, structure containing
-    %                   opts.Y0: initial number (default: 12)
-    %                   opts.alpha: scale parameter of the Poisson model (default: 1, corresponding to usual Poisson distribution)
-    %                   opts.FontSize: font size in the plots (default FontSize = 22.5)
-    %                   opts.Dates: abstract dates in datetime format for display
-    %                   opts.Psi: coefficients of the linear memory functions (default: daily discretized Covid19 serial interval function)
+    %         - sett: parameters of the model, structure containing
+    %                   sett.Y0: initial number (default: 12)
+    %                   sett.alpha: scale parameter of the Poisson model (default: 1, corresponding to usual Poisson distribution)
+    %                   sett.FontSize: font size in the plots (default FontSize = 22.5)
+    %                   sett.Dates: abstract dates in datetime format or time indices for display (optional, by default 1 to T)
+    %                   sett.Psi: coefficients of the linear memory functions (default: daily discretized Covid19 serial interval function)
     %
     %
     % Outputs: - Y: synthetic nonstationary autoregressive Poisson time series with linear memory functions
     %          - Psi_Y: memory functions evaluated in the time series realization
     %          - M: model parameters, structure containing
+    %                   M.X: ground truth reproduction coefficient
     %                   M.Y0: initial observation
     %                   M.Y_SY: synthetic observations including the initial observation
     %                   M.Psi: coefficients of the linear memory functions
     %                   M.alpha: scale parameter of the Poisson model
     %                   M.Dates: abstract dates in datetime format for display
-    %                   M.flag: name of the model for display (SP)
 
     if nargin < 2
 
@@ -61,39 +61,39 @@ function [Y, Psi_Y, M] = generate_synthetic_Poisson(X, opts)
 
     else
 
-        if ~isfield(opts,'Y0');       opts.Y0 = 12;               end
-        if ~isfield(opts,'alpha');    opts.alpha = 1;              end
-        if ~isfield(opts,'FontSize'); opts.FontSize = 22.5;        end
-        if ~isfield(opts,'Dates');    opts.Dates = 1:length(X); end
+        if ~isfield(sett,'Y0');       sett.Y0 = 12;                end
+        if ~isfield(sett,'alpha');    sett.alpha = 1;              end
+        if ~isfield(sett,'FontSize'); sett.FontSize = 22.5;        end
+        if ~isfield(sett,'Dates');    sett.Dates = 1:length(X);    end
 
         % intial observation
-        Y0      = opts.Y0;
+        Y0      = sett.Y0;
 
         % scale parameter
-        alpha    = opts.alpha;
+        alpha    = sett.alpha;
 
         % plot font size
-        FontSize = opts.FontSize;
+        FontSize = sett.FontSize;
 
         % temporal axis
-        Dates    = opts.Dates;
+        Dates    = sett.Dates;
 
     end
 
     % Coefficients of the linear memory functions mimicking
-    if ~isfield(opts,'Psi') % default: Covid19 serial interval function
+    if ~isfield(sett,'Psi') % default: Covid19 serial interval function
         tau     = 25;                        % memory horizon
         shape   = 1/0.28;                    % shape parameter
         scale   = 1.87;                      % scale parameter
         Psi     = gampdf(0:tau,shape,scale); % discretized Gamma probability density function
     else
-        if ~(opts.Psi(1) == 0)
-            tau = length(opts.Psi);
-            Psi = reshape(opts.Psi,1,tau);
+        if ~(sett.Psi(1) == 0)
+            tau = length(sett.Psi);
+            Psi = reshape(sett.Psi,1,tau);
             Psi = [0, Psi];
         else
-            tau = length(opts.Psi) - 1;
-            Psi = reshape(opts.Psi,1,tau+1);
+            tau = length(sett.Psi) - 1;
+            Psi = reshape(sett.Psi,1,tau+1);
         end
     end
     Psi     = Psi/sum(Psi);             % normalize the memory function (optional)
@@ -129,12 +129,12 @@ function [Y, Psi_Y, M] = generate_synthetic_Poisson(X, opts)
     Y           = Y_SY(2:end);
 
     % Store model parameters
+    M.X        = X ;
     M.Y0       = Y0 ;
     M.Y_SY     = Y_SY ;
     M.Psi      = Psi ;
     M.alpha    = alpha ;
     M.Dates    = Dates ;
-    M.flag     = 'SP' ;
 
     %% DISPLAY SYNTHETIC COUNTS
 
