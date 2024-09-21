@@ -1,10 +1,11 @@
-% Primal-dual algorithm from Chambolle and Pock to solve a nonsmooth
-% convex optimization problem of the form
+% Forward differentiation w.r.t. observations of the primal-dual algorithm 
+% of Chambolle and Pock solving a nonsmooth convex optimization problem 
+% of the form
 %
-%    minimize f(x) + r(Lx)
+%    minimize_x f(x|y) + r(Lx)
 %
-% with f,r nonsmooth convex proper semicontinuous functions and L a bounded
-% linear operator.
+% with f,r nonsmooth convex proper semicontinuous functions, L a bounded
+% linear operator and y the observations.
 %
 % If f is strong-convexity, the accelerated version is implemented.
 %
@@ -28,20 +29,14 @@
 % Nonstationary Autoregressive Model for Data-Driven Reproduction Number
 % Estimation. Preprint. arXiv:.
 %
-% Implementation N. Pustelnik, CNRS, ENS Lyon
-% April 2020
-%
-% Updated and augmented by P. Abry and B. Pascal
-% March 2024
-%
-% Enriched to fit nonstationary autoregressive model 
 % B. Pascal and S. Vaiter September 2024.
 
 
-function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
+function [x, dx, obj, incr] = dPD_ChambollePock_Poisson(Y, dY, objective, op, prox, dprox, opts)
 
 
     % Inputs:  - Y: observed corrupted data
+    %          - dY: vector on which the differential is applied
     %          - objective: tools to compute the objective function
     %               fidelity: data fidelity term f
     %               regularization: penalization term g
@@ -51,6 +46,10 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
     %          - prox: proximity operators
     %               fidelity: proximity operator of the data fidelity term f
     %               regularization: proximity operator of the penalization term g
+    %          - dprox: differential of the proximity operators w.r.t. observations
+    %               fidelity: derivative of the proximity operator of the data fidelity term f (implicit dependency)
+    %               yfidelity: derivative of the proximity operator of the data fidelity term f (explicit dependency)
+    %               regularization: derivative of the proximity operator of the penalization term g (only implicit relevant)
     %          - opts: structure containing the properties of the regularizing functional and the parameters of the minimization algorithm
     %               normL: squared operator norm of L
     %               mu: strong-convexity modulus of the data fidelity term
@@ -64,6 +63,7 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
     %
     %
     % Outputs: - x: minimizer of the objective function
+    %          - dx: differential of x w.r.t. observations y applied on dy
     %          - obj: values of the objective function w.r.t iterations
     %          - incr: normalized smoothed increments w.r.t iterations
 
@@ -74,10 +74,14 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
     theta = 1;
 
     % Initializing primal and dual variables
-    x  = opts.xi;
-    y  = op.direct(x);
-    x0 = x;
-    bx = x;
+    dx  = opts.dxi ;
+    x   = opts.xi ;
+    dy  = op.direct(dx);
+    y   = op.direct(x);
+    dx0 = dx;
+    x0  = x;
+    dbx = dx;
+    bx  = x;
 
     % Criteria of convergence
     obj   = zeros(1,opts.iter);
@@ -98,6 +102,7 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
     % If all data are zeros then the estimate is zero else optimization can be run
     if sum(Y(:) == 0) == numel(Y)
 
+        dx   = zeros(size(opts.dxi));
         x    = zeros(size(opts.xi));
         obj  = obj(1);
         incr = incr(1);
@@ -116,24 +121,33 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
         end
 
         % Update the primal variable
-        tmp = y + sig*op.direct(bx);
-        y   = tmp - sig*prox.regularization(tmp/sig, 1/sig);
+        dtmp   = dy + sig*op.direct(dbx) ;
+        tmp    = y + sig*op.direct(bx) ;
+        dy     = dtmp - sig*dprox.regularization(tmp/sig, dtmp/sig, 1/sig);
+        y      = tmp - sig*prox.regularization(tmp/sig, 1/sig);
 
         % Update the dual variable
-        x   = prox.fidelity(x0 - tau * op.adjoint(y),Y,tau);
+        dtemp  = dx0 - tau * op.adjoint(dy);
+        temp   = x0 - tau * op.adjoint(y);
+        dxx    = dprox.fidelity(temp,dtemp,Y,tau);
+        dyx    = dprox.yfidelity(temp,Y,dY,tau);
+        dx     = dxx + dyx; 
+        x      = prox.fidelity(temp,Y,tau);
 
         % Update the the descent steps if acceleration is possible
         if opts.mu >= 0
 
-            theta = (1+2*opts.mu*tau)^(-1/2);
-            tau   = theta*tau;
-            sig   = sig/theta;
+            theta = (1+2*opts.mu*tau)^(-1/2) ;
+            tau   = theta*tau ;
+            sig   = sig/theta ;
 
         end
 
         % Update dual auxiliary variable
-        bx = x + theta*(x - x0);
-        x0 = x;
+        dbx    = dx + theta*(dx - dx0) ;
+        bx     = x + theta*(x - x0) ;
+        dx0    = dx ;
+        x0     = x ;
 
         % Compute the objective function
         obj(i) = objective.fidelity(x,Y) +  objective.regularization(op.direct(x),1);
@@ -159,7 +173,7 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
 
             else
 
-                R             = x(:,1:size(Y,2));
+                X             = x(:,1:size(Y,2));
                 if isempty(find(Xm(:) > 0,1))
                     if i == 2
                         tinc(i-1) = incrc;
@@ -167,7 +181,7 @@ function [x, obj, incr] = PD_ChambollePock_Poisson(Y, objective, op, prox, opts)
                         tinc(i-1) = tinc(i-2);
                     end
                 else
-                    tinc(i-1)     = max(abs(Xm(Xm(:) > 0)-R(Xm(:) > 0))./max(1e-2,Xm(Xm(:) > 0)));
+                    tinc(i-1)     = max(abs(Xm(Xm(:) > 0)-X(Xm(:) > 0))./max(1e-2,Xm(Xm(:) > 0)));
                 end
 
                 if strcmp(opts.stop,'Primal')
