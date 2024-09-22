@@ -29,10 +29,10 @@ X_MLE             = X_MaxLikelihood(Y, Psi_Y) ;
 
 % Parameter of the APURE unbiased risk estimate
 alpha             = 1000 ; % Poisson scaling parameter (default: 1 for standard Poisson)
-N                 = 1 ;   % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
+N                 = 5  ;   % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
 
 % Setup for the grid search minimization of unbiased risk estimates
-L                 = 2 ;   % number of explored values of the regularization parameter lambda
+L                 = 30 ;   % number of explored values of the regularization parameter lambda (default: 60)
 lambda_min        = 1e-2 ; % smallest lambda of the logarithmically spaced grid
 lambda_max        = 1e4 ;  % largest lambda of the logarithmically spaced grid
 
