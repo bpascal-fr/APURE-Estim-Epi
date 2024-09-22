@@ -167,7 +167,7 @@ function [Z_Week, Phi_Z_Week, M_Week] = load_JHU_Weekly(User_Country,opts)
 
         if isempty(N_n)
 
-            error(strcat(User_Country(n),' not found. Look at the list of available countries provided by the get_AllCountries function.'))
+            error(strcat(User_Country(n),' not found. Look at the list of available countries provided by calling AllCountries(1).'))
 
         else
 
