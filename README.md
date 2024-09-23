@@ -33,13 +33,13 @@ This model is driven by a nonnegative time-varying *reproduction coefficient* $\
 - when $\mathsf{X}_t>1$ the observed time series is exponentially increasing with time;
 - while if $\mathsf{X}_t < 1$ the time series is shrinking exponentially fast.
 
-The purpose is to accurately estimate $\{\mathsf{X}_t, \, t = 1, ..., T\}$ from observations  
-> $\mathsf{Y}_t = \mathcal{B}_{\alpha}(\mathsf{X}_t \Psi_t(\mathsf{Y}))$  
+The purpose is to accurately estimate $\{\mathsf{X}_t,  t = 1, ..., T\}$ from observations  
+$\mathsf{Y}_t = \mathcal{B}_{\alpha}(\mathsf{X}_t \Psi_t(\mathsf{Y}))$  
 > 
 corrupted by measurement noise $\mathcal{B}_{\alpha}$ and involving a memory term $\Psi_t(\mathsf{Y})$, while using as little expert knowledge as possible. In particular, no ground truth of any sort is assumed available.
 
 In epidemiology, observations consists in new infection counts, the measurement noise follows a Poisson distribution and the time-varying parameter to be estimated is the *reproduction number* $\mathsf{R}_t$, quantifying the intensity of the virus spread.
-The major challenge to estimate $\{ \mathsf{R}_t, \, t=1,...,T\}$, addressed in [3], is the low quality of infection counts reported during an ongoing epidemic in a crisis context, corrupted by significant administrative noise consisting of missing counts on week-ends and days off, cumulated counts and reporting errors.
+The major challenge to estimate $\{ \mathsf{R}_t, t=1,...,T\}$, addressed in [3], is the low quality of infection counts reported during an ongoing epidemic in a crisis context, corrupted by significant administrative noise consisting of missing counts on week-ends and days off, cumulated counts and reporting errors.
 To obtain accurate estimates of the time-varying reproduction number
 
 
