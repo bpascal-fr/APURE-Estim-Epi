@@ -28,7 +28,7 @@ The demonstration script [`Demo_Epi_Covid`](https://github.com/bpascal-fr/Covid-
 
 ## Project description
 
-In [Pascal & Vaiter, 2024](), a novel *generalized nonstationary autoregressive* model has been proposed [4], encompassing, but not reducing to, one of the most popular model for the propagation of viral epidemics [1], a topic recently brought to the fore due to the COVID-19 pandemic [2,3].
+In [Pascal & Vaiter, 2024](), a novel *generalized nonstationary autoregressive* model has been proposed [5], encompassing, but not reducing to, one of the most popular model for the propagation of viral epidemics [1], a topic recently brought to the fore due to the COVID-19 pandemic [2,3].
 This model is driven by a nonnegative time-varying *reproduction coefficient* $\mathsf{X}_t$ so that:
 - when $\mathsf{X}_t>1$ the observed time series is exponentially increasing with time;
 - while if $\mathsf{X}_t < 1$ the time series is shrinking exponentially fast.
@@ -39,16 +39,13 @@ The purpose is to accurately estimate $\{\mathsf{X}_t,  t = 1, ..., T\}$ from ob
 corrupted by measurement noise $\mathcal{B}$ and involving a memory term $\Psi_t(\mathsf{Y})$, while using as little expert knowledge as possible. In particular, no ground truth of any sort is assumed available.
 
 In epidemiology, observations consists in new infection counts, the measurement noise follows a Poisson distribution and the time-varying parameter to be estimated is the *reproduction number* $\mathsf{R}_t$, quantifying the intensity of the virus spread.
-The major challenge to estimate $\{ \mathsf{R}_t, t=1,...,T\}$, addressed in [3], is the low quality of infection counts reported during an ongoing epidemic in a crisis context, corrupted by significant administrative noise consisting of missing counts on week-ends and days off, cumulated counts and reporting errors.
-To obtain accurate estimates of the time-varying reproduction number
+The major challenge to estimate $\{ \mathsf{R}_t, t=1,...,T\}$ is the low quality of infection counts reported during an ongoing epidemic in a crisis context, corrupted by significant administrative noise consisting of missing counts on week-ends and days off, cumulated counts and reporting errors.
 
+To obtain accurate estimates of the time-varying reproduction number a variational framework have been introduced in [2,3], enforcing temporal smoothness of $\mathsf{R}_t$, which is expected for an indicator describing the propagation of a pathogen in a large susceptible population.
+In [Pascal & Vaiter, 2024](), the administrative noise is smoothed out by considering *weekly* aggregated counts inspiring from [4], and a *scaled* Poisson model is introduced to better account for intrinsic fluctuations of infection counts, extending the state-of-the-art model proposed in [1].
 
-COVID-19 pandemic has brought to the fore epidemiological models which, though describing a rich variety of behaviors, have previously received little attention in the signal processing literature.
-During the pandemic, several works successfully leveraged state-of-the-art signal processing strategies to robustly infer epidemiological indicators despite the low quality of COVID-19 data.
-In the present work, a novel nonstationary autoregressive model is introduced, encompassing, but not reducing to, one of the most popular models for the propagation of viral epidemics.
-Using a variational framework,  penalized likelihood estimators of the parameters of this new model are designed.
-In practice, the main bottleneck is that the estimation accuracy strongly depends on hyperparameters tuning.
-Without available ground truth,  hyperparameters are selected by minimizing specifically designed data-driven oracles,  used as proxy for the estimation error.
+In practice, the main bottleneck to the use of the use of variational estimators is that the accuracy of the estimate strongly depends on hyperparameters tuning.
+Without available ground truth, hyperparameters are selected by minimizing specifically designed data-driven oracles, used as proxy for the estimation error.
 Focusing on the nonstationary autoregressive Poisson model, the Stein's Unbiased Risk Estimate formalism is generalized to construct asymptotically unbiased risk estimators based on the derivation of an original autoregressive counterpart of Stein's lemma.
 The accuracy of these oracles and of the resulting estimates are assessed through intensive Monte Carlo simulations on synthetic data.
 Then, elaborating on recent epidemiological models, a novel weekly scaled Poisson model is proposed, enabling to better account for intrinsic variability of the contamination while being robust to reporting errors.
@@ -61,7 +58,9 @@ Finally, the overall data-driven procedure is particularized to the estimation o
 
 [3] Pascal, B., Abry, P., Pustelnik, N., Roux, S., Gribonval, R., & Flandrin, P. (2022). Nonsmooth convex optimization to estimate the Covid-19 reproduction number space-time evolution with robustness against low quality data. *IEEE Transactions on Signal Processing*, 70, 2859–2868.
 
-[4] Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a Nonstationary Autoregressive Model for Data-Driven Reproduction Number  Estimation. *Preprint*. [arXiv:]()
+[4] Nash, R. K., Bhatt, S., Cori, A., & Nouvellet, P. (2023). Estimating the epidemic reproduction number from temporally aggregated incidence data: A statistical modelling approach and software tool. *PLOS Computational Biology*, 19(8), e1011439.
+
+[5] Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a Nonstationary Autoregressive Model for Data-Driven Reproduction Number  Estimation. *Preprint*. [arXiv:]()
 
 ## Installation and dependencies
 
