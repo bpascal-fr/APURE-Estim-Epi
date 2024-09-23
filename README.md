@@ -34,7 +34,7 @@ This model is driven by a nonnegative time-varying *reproduction coefficient* $\
 - while if $\mathsf{X}_t < 1$ the time series is shrinking exponentially fast.
 
 The purpose is to accurately estimate $\{\mathsf{X}_t,  t = 1, ..., T\}$ from observations  
-> $\mathsf{Y}_t = \mathcal{B}_{\alpha}  (\mathsf{X}_t \Psi_t(\mathsf{Y}))$ 
+> $\mathsf{Y}_t = B_{\alpha}  (\mathsf{X}_t \Psi_t(\mathsf{Y}))$ 
 >
 corrupted by measurement noise $\mathcal{B}_{\alpha}$ and involving a memory term $\Psi_t(\mathsf{Y})$, while using as little expert knowledge as possible. In particular, no ground truth of any sort is assumed available.
 
