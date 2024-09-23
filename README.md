@@ -46,13 +46,11 @@ In [Pascal & Vaiter, 2024](), the administrative noise is smoothed out by consid
 
 In practice, the main bottleneck to the use of the use of variational estimators is that the accuracy of the estimate strongly depends on *hyperparameters* tuning.
 Without available ground truth, hyperparameters are selected by minimizing specifically designed data-driven oracles, used as proxy for the estimation error.
-Focusing on the nonstationary autoregressive *Poisson model*, [Pascal & Vaiter, 2024] generalized the Stein's Unbiased Risk Estimate formalism to construct asymptotically unbiased risk estimators based on the derivation of an original autoregressive counterpart of Stein's lemma.
+Focusing on the nonstationary autoregressive *Poisson model*, [Pascal & Vaiter, 2024]() generalized the Stein's Unbiased Risk Estimate formalism to construct asymptotically unbiased risk estimators based on the derivation of an original autoregressive counterpart of Stein's lemma, referred to as prediction and estimation Autoregressive Poisson Unbiased Risk Estimates (APURE).
 
-
-
-The accuracy of these oracles and of the resulting estimates are assessed through intensive Monte Carlo simulations on synthetic data.
-Then, elaborating on recent epidemiological models, a novel weekly scaled Poisson model is proposed, enabling to better account for intrinsic variability of the contamination while being robust to reporting errors.
-Finally, the overall data-driven procedure is particularized to the estimation of COVID-19 reproduction number and exemplified on real COVID-19 infection counts in different countries and at different stages of the pandemic, demonstrating its ability to yield consistent estimates.
+The `APURE-Estim-Epi`toolbox implements the evaluation of robustified prediction and estimation APURE, leveraging Finite Difference and Monte Carlo strategies and the minimization of these data-driven oracles selecting optimal hyperparameters.
+Accurate piecewise linear estimates of the reproduction coefficient are provided.
+The overall procedure is exemplified both on synthetic observations and on real COVID-19 infection counts.
 
 
 [1] Cori, A., Ferguson, N. M., Fraser, C., & Cauchemez, S. (2013). A new framework and software to estimate time-varying reproduction numbers during epidemics. *American Journal of Epidemiology*, 178(9), 1505-1512.
