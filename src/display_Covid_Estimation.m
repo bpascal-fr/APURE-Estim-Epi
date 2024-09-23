@@ -44,7 +44,7 @@ function display_Covid_Estimation(R, lambda, oracle, FontSize)
     end
     grid on
     hold on
-    fill([lambda.GRID fliplr(lambda.GRID)],[oracle.APURE-oracle.CR fliplr(oracle.APURE-oracle.CR)],orchid,'EdgeColor',orchid,'LineStyle','--','FaceAlpha',0.3) ;
+    fill([lambda.GRID fliplr(lambda.GRID)],[oracle.APURE-oracle.CR fliplr(oracle.APURE+oracle.CR)],orchid,'EdgeColor',orchid,'LineStyle','--','FaceAlpha',0.3) ;
     p3 = plot(lambda.GRID,oracle.APURE,'linewidth',2,'color',orchid) ;
     p4 = plot(lambda.APURE,oracle.APURE(lambda.GRID == lambda.APURE),'.','markersize',35,'Color',orchid) ;
     xline(lambda.APURE,'--','LineWidth',2,'Color',orchid)
@@ -111,7 +111,7 @@ function display_Covid_Estimation(R, lambda, oracle, FontSize)
     xlim([R.Dates(1), R.Dates(end)])
 
     % Limits of the y-axis
-    ylim([0, 1.05 * M])
+    ylim([0, 1.1 * M])
 
     % Display the legend and titles
     l2               = legend(Q,L) ;
