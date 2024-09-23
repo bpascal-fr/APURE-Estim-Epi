@@ -146,6 +146,9 @@ function compare_APURE(X1,X2,FontSize)
     else
         warning('The second estimates have not been identified and will hence be ignored.')
     end
+
+    % Limits of the y-axis
+    ylim([0, 1.1 * M])
     
     % Display the legend and titles
     leg              = legend(Q,L) ;

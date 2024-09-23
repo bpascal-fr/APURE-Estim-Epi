@@ -150,6 +150,9 @@ function compare_Covid(R1,R2,FontSize)
     % Limits of the x-axis
     xlim([R1.Dates(1), R1.Dates(end)])
 
+    % Limits of the y-axis
+    ylim([0, 1.1 * M])
+
     % Display the legend and titles
     leg              = legend(Q,L) ;
     leg.Interpreter  = 'Latex' ;
