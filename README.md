@@ -17,14 +17,14 @@ This project contains the `Matlab` codes associated to the preprint:
 ### Data-driven piecewise linear estimation under nonstationary autoregressive Poisson model
 
 Two demonstration scripts are provided:
-- [`Demo_Synthetic_Example`](https://github.com/bpascal-fr/APURE_Estim-Epi/blob/master/demo_R_World.m), simple to run, all options set to the default values;
-- [`Advanced_Synthetic_Example`](https://github.com/bpascal-fr/APURE_Estim-Epi/blob/master/demo_R_France.m), all possible tunings unrolled for complete customization, enabling for example to reduce the computational load or to increase the precision of the explored parameter grid.
+- [`Demo_Synthetic_Poisson`](https://github.com/bpascal-fr/APURE-Estim-Epi/blob/main/Demo_Synthetic_Poisson.m), simple to run, all options set to the default values;
+- [`Advanced_Synthetic_Example`](https://github.com/bpascal-fr/APURE-Estim-Epi/blob/main/Advanced_Synthetic_Poisson.m), all possible tunings unrolled for complete customization, enabling for example to reduce the computational load or to increase the precision of the explored parameter grid.
 
-These scripts are accompanied with the ground truth used to generate synthetic observations, displayed in Figure 1 in [Pascal & Vaiter, 2024](), stored in [data](), so that the user can reproduce the numerical experiments presented in Section 4 of the associated preprint.
+These scripts are accompanied with the ground truth used to generate synthetic observations, displayed in Figure 1 in [Pascal & Vaiter, 2024](), stored in [data](https://github.com/bpascal-fr/APURE-Estim-Epi/tree/main/data), so that the user can reproduce the numerical experiments presented in Section 4 of the associated preprint.
 
 ### Application to Data-Driven COVID-19 Reproduction Number Estimation
 
-The demonstration script [`Demo_Epi_Covid`](https://github.com/bpascal-fr/Covid-Estim-R/blob/master/demo_R_World.m) enables to download COVID-19 new infection counts reported in 200+ countries during 3 years of pandemic collected from National Health Services and made publicly available on the Johns Hopkins University [repository](https://coronavirus.jhu.edu/) and to estimate automatically the time-varying *weekly* instantaneous reproduction number under the extended epidemiological model proposed in Section 5 of [Pascal & Vaiter, 2024]().
+The demonstration script [`Demo_Epi_Covid`](https://github.com/bpascal-fr/APURE-Estim-Epi/blob/main/Demo_Epi_Covid.m) enables to download COVID-19 new infection counts reported in 200+ countries during 3 years of pandemic collected from National Health Services and made publicly available on the Johns Hopkins University [repository](https://coronavirus.jhu.edu/) and to estimate automatically the time-varying *weekly* instantaneous reproduction number under the extended epidemiological model proposed in Section 5 of [Pascal & Vaiter, 2024]().
 
 ## Project description
 
