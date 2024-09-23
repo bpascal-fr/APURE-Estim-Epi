@@ -44,9 +44,12 @@ The major challenge to estimate $\{ \mathsf{R}_t, t=1,...,T\}$ is the low qualit
 To obtain accurate estimates of the time-varying reproduction number a variational framework have been introduced in [2,3], enforcing temporal smoothness of $\mathsf{R}_t$, which is expected for an indicator describing the propagation of a pathogen in a large susceptible population.
 In [Pascal & Vaiter, 2024](), the administrative noise is smoothed out by considering *weekly* aggregated counts inspiring from [4], and a *scaled* Poisson model is introduced to better account for intrinsic fluctuations of infection counts, extending the state-of-the-art model proposed in [1].
 
-In practice, the main bottleneck to the use of the use of variational estimators is that the accuracy of the estimate strongly depends on hyperparameters tuning.
+In practice, the main bottleneck to the use of the use of variational estimators is that the accuracy of the estimate strongly depends on *hyperparameters* tuning.
 Without available ground truth, hyperparameters are selected by minimizing specifically designed data-driven oracles, used as proxy for the estimation error.
-Focusing on the nonstationary autoregressive Poisson model, the Stein's Unbiased Risk Estimate formalism is generalized to construct asymptotically unbiased risk estimators based on the derivation of an original autoregressive counterpart of Stein's lemma.
+Focusing on the nonstationary autoregressive *Poisson model*, [Pascal & Vaiter, 2024] generalized the Stein's Unbiased Risk Estimate formalism to construct asymptotically unbiased risk estimators based on the derivation of an original autoregressive counterpart of Stein's lemma.
+
+
+
 The accuracy of these oracles and of the resulting estimates are assessed through intensive Monte Carlo simulations on synthetic data.
 Then, elaborating on recent epidemiological models, a novel weekly scaled Poisson model is proposed, enabling to better account for intrinsic variability of the contamination while being robust to reporting errors.
 Finally, the overall data-driven procedure is particularized to the estimation of COVID-19 reproduction number and exemplified on real COVID-19 infection counts in different countries and at different stages of the pandemic, demonstrating its ability to yield consistent estimates.
