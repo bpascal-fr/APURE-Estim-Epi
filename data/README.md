@@ -9,15 +9,6 @@ Reported new cases collected by National Health Authorities of 200+ countries ma
 
 `COVID-19-JH_confirmed-worldwide_stored.csv` downloaded from [JHU repository](https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv) on *March 27, 2024*.
 
-
-## Santé Publique France data
-
-Reported new cases in all French departments collected by Regional Health Agencies (*Agences Régionales de Santé*, ARS) made available by the French government through the SI-DEP framework on the portal [data.gouv.fr/](https://www.data.gouv.fr/fr/datasets/donnees-de-laboratoires-pour-le-depistage-a-compter-du-18-05-2022-si-dep/).
-
-> *Daily new cases from May 13, 2020 to June 27, 2023.*
-
-`Covid_French_Departments_stored.csv` downloaded from [Santé Publique France repository](https://www.data.gouv.fr/fr/datasets/r/426bab53-e3f5-4c6a-9d54-dba4442b3dbc) on *March 31, 2024*.
-
 ## Synthetic example
 
 Synthetic piecewise linear reproduction coefficient X of length T = 300 and initial condition Y0  used to generate the synthetic nonstationary autoregressive Poisson time series considered in Section IV of the paper:
