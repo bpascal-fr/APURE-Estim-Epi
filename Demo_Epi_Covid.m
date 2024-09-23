@@ -14,34 +14,23 @@ AllCountries(list)
 % list = 1: display all countries names
 
 % Countries to monitor
-User_Country                = "France" ; 
+User_Country              = "France" ; 
 
 % Time period
-opts_load.LastDay           = '2023-02-05'; % Last day of the time period in format 'YYYY-MM-DD'. If not provided set to March 9, 2023.
-opts_load.W                 = 70;           % Length of the time period in weeks. If -1 or not provided entire available time period.
+opts_load.LastDay         = '2023-02-05'; % Last day of the time period in format 'YYYY-MM-DD'. If not provided set to March 9, 2023.
+opts_load.W               = 70;           % Length of the time period in weeks. If -1 or not provided entire available time period.
 
 % Load data
-[Z, Phi_Z, M]               = load_JHU_Weekly(User_Country,opts_load);
+[Z, Phi_Z, M]             = load_JHU_Weekly(User_Country,opts_load);
 
 %% MAXIMUM LIKELIHOOD ESTIMATE
 
-X_MLE             = X_MaxLikelihood(Z,Phi_Z) ; 
+X_MLE                     = X_MaxLikelihood(Z,Phi_Z) ; 
 
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
 
-% Parameter of the APURE unbiased risk estimate
-N                 = 1 ;   % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
-
-% Setup for the grid search minimization of unbiased risk estimates
-L                 = 2 ;   % number of explored values of the regularization parameter lambda
-lambda_min        = 1e-2 ; % smallest lambda of the logarithmically spaced grid
-lambda_max        = 1e4 ;  % largest lambda of the logarithmically spaced grid
-
-% Minimization of the APURE unbiased prediction risk estimate
-opts.N          = N ;
-opts.L          = L ;
-opts.lambda_min = 1e-2 ;
-opts.lambda_max = 1e4 ;
+% Parameter of the APURE unbiased risk estimates  (see APURE_Prediction and APURE_Estimation documentation for more options)
+opts.N                    = 10 ; % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
 
 % Minimization of the APURE unbiased prediction risk estimate
 [R_P, lambda_P, oracle_P] = APURE_Prediction(Z,Phi_Z,M,opts) ;

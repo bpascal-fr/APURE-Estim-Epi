@@ -27,35 +27,26 @@ X_MLE             = X_MaxLikelihood(Y, Psi_Y) ;
 
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
 
-% Parameter of the APURE unbiased risk estimate
-alpha             = 1000 ; % Poisson scaling parameter (default: 1 for standard Poisson)
-N                 = 5  ;   % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
+% Parameter of the APURE unbiased risk estimates
+opts.alpha                = M.alpha ; % Poisson scaling parameter (default: 1 for standard Poisson)
+opts.N                    = 5  ;      % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
 
-% Setup for the grid search minimization of unbiased risk estimates
-L                 = 30 ;   % number of explored values of the regularization parameter lambda (default: 60)
-lambda_min        = 1e-2 ; % smallest lambda of the logarithmically spaced grid
-lambda_max        = 1e4 ;  % largest lambda of the logarithmically spaced grid
+% Setup for the grid search minimization of unbiased prediction risk estimates
+opts.L                    = 30 ;      % number of explored values of the regularization parameter lambda (default: 60)
+opts.lambda_min           = 1e-2 ;    % smallest lambda of the logarithmically spaced grid
+opts.lambda_max           = 1e4 ;     % largest lambda of the logarithmically spaced grid
 
-% Minimization of the APURE unbiased prediction risk estimate
-opts_P.alpha      = alpha ;
-opts_P.N          = N ;
-opts_P.L          = L ;
-opts_P.lambda_min = 1e-2 ;
-opts_P.lambda_max = 1e4 ;
-[X_P, lambda_P, oracle_P] = APURE_Prediction(Y,Psi_Y,M,opts_P) ;
+% Minimization of the APURE unbiased risk estimates
+[X_P, lambda_P, oracle_P] = APURE_Prediction(Y,Psi_Y,M,opts) ;
 % - X_P.GT: ground truth (if provided)
 % - X_P.MLE: estimated maximum likelihood reproduction coefficient
 % - X_P.RISK: estimated reproduction coefficient with regularization parameter minimizing true prediction risk (if ground truth available)
 % - X_P.APURE: estimated reproduction coefficient with regularization parameter minimizing APURE prediction risk estimate
 % - X_P.Dates: abstract dates in datetime format for display
 
+
 % Minimization of the APURE unbiased estimation risk estimate
-opts_E.alpha      = alpha ;
-opts_E.N          = N ;
-opts_E.L          = L ;
-opts_E.lambda_min = 1e-2 ;
-opts_E.lambda_max = 1e4 ;
-[X_E, lambda_E, oracle_E] = APURE_Estimation(Y,Psi_Y,M,opts_E) ;
+[X_E, lambda_E, oracle_E] = APURE_Estimation(Y,Psi_Y,M,opts) ;
 % - X_E.GT: ground truth (if provided)
 % - X_E.MLE: estimated maximum likelihood reproduction coefficient
 % - X_E.RISK: estimated reproduction coefficient with regularization parameter minimizing true estimation risk (if ground truth available)
