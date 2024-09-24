@@ -12,4 +12,4 @@ Reported new cases collected by National Health Authorities of 200+ countries ma
 ## Synthetic example
 
 Synthetic piecewise linear reproduction coefficient X of length T = 300 and initial condition Y0  used to generate the synthetic nonstationary autoregressive Poisson time series considered in Section IV of the paper:
-> Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a Nonstationary Autoregressive Model for Data-Driven Reproduction Number Estimation. *arXiv preprint*. [arXiv:]().
+> Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a Nonstationary Autoregressive Model for Data-Driven Reproduction Number Estimation. *arXiv preprint*. [arXiv:2409.14937](https://arxiv.org/abs/2409.14937).
