@@ -30,7 +30,7 @@
 %
 % - Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a
 % Nonstationary Autoregressive Model for Data-Driven Reproduction Number
-% Estimation. Preprint. arXiv:.
+% Estimation. Preprint. arXiv:2409.14937.
 
 % Implementation B. Pascal, J. Du and P. Abry
 % March 2024

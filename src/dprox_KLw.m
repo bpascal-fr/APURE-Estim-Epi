@@ -20,7 +20,7 @@
 %
 % - Pascal, B., Vaiter, S. (2024, September). Risk Estimate under a
 % Nonstationary Autoregressive Model for Data-Driven Reproduction Number
-% Estimation. Preprint. arXiv:.
+% Estimation. Preprint. arXiv:2409.14937.
 
 function dprox = dprox_KLw(X,dX,Y,Psi_Y,gamma)
 
