@@ -23,7 +23,7 @@ sett.alpha              = 1000; % Poisson scaling parameter (1 for standard Pois
 
 %% MAXIMUM LIKELIHOOD ESTIMATE
 
-X_MLE             = X_MaxLikelihood(Y, Psi_Y) ; 
+X_ML              = X_MaxLikelihood(Y, Psi_Y) ; 
 
 
 %% PENALIZED KULLBACK-LEIBLER ESTIMATE WITH MANUAL CHOICE OF THE REGULARIZATION PARAMETER
@@ -34,6 +34,22 @@ lambda            = 50 ;
 % Minimization of the penalized Kullback-Leibler functional
 X_PKL             = X_Penalized(Y, Psi_Y, lambda) ;
 
+%% DISPLAY THE MAXIMUM LIKELIHOOD AND VARIATIONAL ESTIMATE WITH MANUALLY TUNED REGULARIZATION PARAMETER
+
+% Store the quantities to be displayed
+X_Manual.GT       = X ;
+X_Manual.ML       = X_ML ;
+X_Manual.PKL      = X_PKL ;
+
+% Choose the font size in the plots
+FontSize          = 22.5 ;
+
+% Plot the ground truth, if available, and manual estimates
+display_Estim_Manual(X_Manual,FontSize)
+% - X_Manual.GT: ground truth (if provided)
+% - X_Manual.ML: estimated maximum likelihood reproduction coefficient
+% - X_Manual.PKL: estimated penalized Kullback-Leibler reproduction coefficient
+% - X_Manual.Dates: abstract dates in datetime format or time indices for display (optional, by default 1 to T)
 
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
 
@@ -49,7 +65,7 @@ opts.lambda_max           = 1e4 ;     % largest lambda of the logarithmically sp
 % Minimization of the APURE unbiased risk estimates
 [X_P, lambda_P, oracle_P] = APURE_Prediction(Y,Psi_Y,M,opts) ;
 % - X_P.GT: ground truth (if provided)
-% - X_P.MLE: estimated maximum likelihood reproduction coefficient
+% - X_P.ML: estimated maximum likelihood reproduction coefficient
 % - X_P.RISK: estimated reproduction coefficient with regularization parameter minimizing true prediction risk (if ground truth available)
 % - X_P.APURE: estimated reproduction coefficient with regularization parameter minimizing APURE prediction risk estimate
 % - X_P.Dates: abstract dates in datetime format for display
@@ -58,10 +74,11 @@ opts.lambda_max           = 1e4 ;     % largest lambda of the logarithmically sp
 % Minimization of the APURE unbiased estimation risk estimate
 [X_E, lambda_E, oracle_E] = APURE_Estimation(Y,Psi_Y,M,opts) ;
 % - X_E.GT: ground truth (if provided)
-% - X_E.MLE: estimated maximum likelihood reproduction coefficient
+% - X_E.ML: estimated maximum likelihood reproduction coefficient
 % - X_E.RISK: estimated reproduction coefficient with regularization parameter minimizing true estimation risk (if ground truth available)
 % - X_E.APURE: estimated reproduction coefficient with regularization parameter minimizing APURE estimation risk estimate
 % - X_E.Dates: abstract dates in datetime format for display
+
 
 %% DISPLAY ORACLES AND ESTIMATED REPRODUCTION COEFFICIENTS
 

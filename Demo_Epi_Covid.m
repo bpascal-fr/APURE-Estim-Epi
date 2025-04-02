@@ -25,8 +25,26 @@ opts_load.W               = 70;           % Length of the time period in weeks. 
 
 %% MAXIMUM LIKELIHOOD ESTIMATE
 
-X_ML                      = X_MaxLikelihood(Z,Phi_Z) ; 
+R_ML                      = X_MaxLikelihood(Z,Phi_Z) ; 
 
+
+%% PENALIZED KULLBACK-LEIBLER ESTIMATE WITH MANUAL CHOICE OF THE REGULARIZATION PARAMETER
+
+% Manual choice of the regularization parameter
+lambda            = 50 ;
+
+% Minimization of the penalized Kullback-Leibler functional
+R_PKL             = X_Penalized(Z, Phi_Z, lambda) ;
+
+
+%% DISPLAY THE MAXIMUM LIKELIHOOD AND VARIATIONAL ESTIMATE WITH MANUALLY TUNED REGULARIZATION PARAMETER
+
+% Store the quantities to be displayed
+R_Manual.ML       = R_ML ;
+R_Manual.PKL      = R_PKL ;
+
+% Plot the ground truth, if available, and manual estimates
+display_Covid_Manual(R_Manual)
 
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
 
