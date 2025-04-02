@@ -71,14 +71,14 @@ function compare_APURE(X1,X2,FontSize)
     end
 
     % Display Maximum Likelihood Estimate
-    if isfield(X1,'MLE')
-        q            = plot(X1.Dates,X1.MLE,'linewidth',2,'color',cloud) ;
+    if isfield(X1,'ML')
+        q            = plot(X1.Dates,X1.ML,'linewidth',2,'color',cloud) ;
         Q            = [Q, q] ;
         L{iEst}      = '$\mathrm{X}_t^{\mathrm{ML}}$' ;
         iEst         = iEst + 1 ;
     else
         if isfield(X2,'GT')
-            q        = plot(X2.Dates,X2.MLE,'linewidth',2,'color',cloud) ;
+            q        = plot(X2.Dates,X2.ML,'linewidth',2,'color',cloud) ;
             Q        = [Q, q] ;
             L{iEst}  = '$\mathrm{X}_t^{\mathrm{ML}}$' ;
             iEst     = iEst + 1 ;

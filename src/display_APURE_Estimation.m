@@ -9,11 +9,11 @@ function display_APURE_Estimation(X, lambda, oracle, FontSize)
 
     % Inputs:  - X: estimated piecewise linear reproduction coefficients
     %            - GT: ground truh (if provided in M.X)
-    %            - MLE: estimated maximum likelihood reproduction coefficient
+    %            - ML: estimated maximum likelihood reproduction coefficient
     %            - RISK: reaching lowest true estimation risk (if ground truth is provided in M.X)
     %            - APURE: reaching lowest APURE unbiased estimation risk estimate
     %            - Dates: abstract dates in datetime format or time indices for display (optional, by default 1 to T)
-    %            - Name: Estimation or Estimation
+    %            - Name: Prediction or Estimation
     %          - lambda: optimal regularization parameters
     %            - APURE: minimizing APURE unbiased estimation risk estimate
     %            - RISK: minimizing true estimation risk (if ground truth is provided initially)
@@ -21,6 +21,7 @@ function display_APURE_Estimation(X, lambda, oracle, FontSize)
     %          - oracles: structure containing for each explored lambda
     %            - APURE: Robustified Finite Difference Monte Carlo APURE unbiased estimation risk estimate
     %            - RISK: Quadratic estimation risk (if ground truth is provided initially)
+    %          - FontSize: font size used in the plots (optional, by default 22.5)
     %
 
     if nargin < 4
@@ -88,8 +89,8 @@ function display_APURE_Estimation(X, lambda, oracle, FontSize)
     end
 
     % Display Maximum Likelihood Estimate
-    if isfield(X,'MLE')
-        q       = plot(X.Dates,X.MLE,'linewidth',1,'color',cloud) ;
+    if isfield(X,'ML')
+        q       = plot(X.Dates,X.ML,'linewidth',1,'color',cloud) ;
         Q       = [Q, q] ;
         L{iEst} = '$\mathrm{X}_t^{\mathrm{ML}}$' ;
         iEst    = iEst + 1 ;

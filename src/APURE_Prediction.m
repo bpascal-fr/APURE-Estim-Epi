@@ -70,7 +70,7 @@ function [X, lambda, oracle] = APURE_Prediction(Y,Psi_Y,M,opts)
     %
     % Outputs: - X: estimated piecewise linear reproduction coefficients
     %            - GT: ground truh (if provided in M.X)
-    %            - MLE: estimated maximum likelihood reproduction coefficient
+    %            - ML: estimated maximum likelihood reproduction coefficient
     %            - RISK: reaching lowest true prediction risk (if ground truth is provided in M.X)
     %            - APURE: reaching lowest APURE unbiased prediction risk estimate
     %            - Dates: abstract dates in datetime format for display (if provided in M.Dates)
@@ -284,7 +284,7 @@ function [X, lambda, oracle] = APURE_Prediction(Y,Psi_Y,M,opts)
     if isfield(M,'X')
         X.GT              = M.X ;
     end
-    X.MLE                 = X_MaxLikelihood(Y, Psi_Y) ; 
+    X.ML                 = X_MaxLikelihood(Y, Psi_Y) ; 
     if isfield(M,'X')
         X.RISK            = X_best ;
     end

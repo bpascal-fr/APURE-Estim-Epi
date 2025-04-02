@@ -71,14 +71,14 @@ function compare_Covid(R1,R2,FontSize)
     end
 
     % Display Maximum Likelihood Estimate
-    if isfield(R1,'MLE')
-        q            = plot(R1.Dates,R1.MLE,'linewidth',2,'color',cloud) ;
+    if isfield(R1,'ML')
+        q            = plot(R1.Dates,R1.ML,'linewidth',2,'color',cloud) ;
         Q            = [Q, q] ;
         L{iEst}      = '$\mathrm{R}_t^{\mathrm{ML}}$' ;
         iEst         = iEst + 1 ;
     else
         if isfield(R2,'GT')
-            q        = plot(R2.Dates,R2.MLE,'linewidth',2,'color',cloud) ;
+            q        = plot(R2.Dates,R2.ML,'linewidth',2,'color',cloud) ;
             Q        = [Q, q] ;
             L{iEst}  = '$\mathrm{R}_t^{\mathrm{ML}}$' ;
             iEst     = iEst + 1 ;

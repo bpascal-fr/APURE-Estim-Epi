@@ -8,7 +8,7 @@
 function display_Covid_Estimation(R, lambda, oracle, FontSize)
 
     % Inputs:  - R: estimated piecewise linear COVID-19 reproduction number
-    %            - MLE: estimated maximum likelihood COVID-19 reproduction number
+    %            - ML: estimated maximum likelihood COVID-19 reproduction number
     %            - APURE: reaching lowest APURE unbiased estimation risk estimate
     %            - Dates: abstract dates in datetime format or time indices for display (optional, by default 1 to T)
     %            - Name: Estimation or Estimation
@@ -84,8 +84,8 @@ function display_Covid_Estimation(R, lambda, oracle, FontSize)
     end
 
     % Display Maximum Likelihood Estimate
-    if isfield(R,'MLE')
-        q       = plot(R.Dates,R.MLE,'linewidth',1,'color',cloud) ;
+    if isfield(R,'ML')
+        q       = plot(R.Dates,R.ML,'linewidth',1,'color',cloud) ;
         Q       = [Q, q] ;
         L{iEst} = '$\mathrm{R}_t^{\mathrm{ML}}$' ;
         iEst    = iEst + 1 ;
