@@ -2,7 +2,6 @@ clear all
 close all
 clc
 
-addpath(genpath('/Users/bpascal/ownCloud/PhD_Barbara/Matlab/stein-piecewise-filtering'))
 addpath(genpath(pwd))
 
 %% LOAD AND DISPLAY NEW INFECTION COUNTS

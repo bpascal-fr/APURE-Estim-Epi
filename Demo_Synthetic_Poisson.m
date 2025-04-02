@@ -2,7 +2,6 @@ clear all
 close all
 clc
 
-addpath(genpath('/Users/bpascal/ownCloud/PhD_Barbara/Matlab/stein-piecewise-filtering'))
 addpath(genpath(pwd))
 
 
@@ -21,9 +20,19 @@ sett.alpha              = 1000; % Poisson scaling parameter (1 for standard Pois
 % - Psi_Y: memory functions evaluated in Y
 % - M: parameters of the model
 
+
 %% MAXIMUM LIKELIHOOD ESTIMATE
 
 X_MLE             = X_MaxLikelihood(Y, Psi_Y) ; 
+
+
+%% PENALIZED KULLBACK-LEIBLER ESTIMATE WITH MANUAL CHOICE OF THE REGULARIZATION PARAMETER
+
+% Manual choice of the regularization parameter
+lambda            = 50 ;
+
+% Minimization of the penalized Kullback-Leibler functional
+X_PKL             = X_Penalized(Y, Psi_Y, lambda) ;
 
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
 
