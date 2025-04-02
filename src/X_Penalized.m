@@ -21,7 +21,7 @@
 % B. Pascal and S. Vaiter, April 2025.
 
 
-function [X,obj,incr,op] = X_Penalized(Y,Psi_Y,lambda,flag)
+function [X,obj,incr,op] = X_Penalized(Y,Psi_Y,lambda)
 
 
     % Minimization of the Poisson penalized log-likelood
@@ -39,7 +39,7 @@ function [X,obj,incr,op] = X_Penalized(Y,Psi_Y,lambda,flag)
     %
     % Inputs:  - Y: nonstationary autoregressive Poisson observations
     %          - Psi_Y: memory functions evaluated in the observations Y
-    %          - flag: if 'none' no progression bar (optional)
+    %          - lambda: manually tuned regularization parameter
     %
     %
     % Outputs: - X: estimated piecewise linear reproduction coefficients
@@ -47,23 +47,6 @@ function [X,obj,incr,op] = X_Penalized(Y,Psi_Y,lambda,flag)
     %          - incr: normalized (smoothed) increments w.r.t iterations
     %          - op: linear direct and adjoint operators involved in the regularization term
     
-    %% DEFAULTS OPTIONS
-
-    if nargin == 3
-        opts     = struct;
-    end
-    
-    
-    % Name of the estimator for displaying waiting bar
-    if isfield(opts,'flag')
-        if ~strcmp(opts.flag,'none')
-            opts.flag = flag;
-        else
-            opts = rmfield(opts,'flag');
-        end
-    else
-        opts.flag = 'Penalized Kullback-Leibler';
-    end
 
     
     %% RESIZE INPUT 
