@@ -23,7 +23,7 @@ sett.alpha              = 1000; % Poisson scaling parameter (1 for standard Pois
 
 %% MAXIMUM LIKELIHOOD ESTIMATE
 
-X_MLE             = X_MaxLikelihood(Y, Psi_Y) ; 
+X_ML              = X_MaxLikelihood(Y, Psi_Y) ; 
 
 
 %% PENALIZED KULLBACK-LEIBLER ESTIMATE WITH MANUAL CHOICE OF THE REGULARIZATION PARAMETER
@@ -34,6 +34,17 @@ lambda            = 50 ;
 % Minimization of the penalized Kullback-Leibler functional
 X_PKL             = X_Penalized(Y, Psi_Y, lambda) ;
 
+
+%% DISPLAY THE MAXIMUM LIKELIHOOD AND VARIATIONAL ESTIMATE WITH MANUALLY TUNED REGULARIZATION PARAMETER
+
+% Store the quantities to be displayed
+X_Manual.GT       = X ;
+X_Manual.ML       = X_ML ;
+X_Manual.PKL      = X_PKL ;
+
+% Plot the ground truth, if available, and manual estimates
+display_Estim_Manual(X_Manual)
+
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
 
 % Minimization of the APURE unbiased prediction risk estimate
@@ -41,6 +52,7 @@ X_PKL             = X_Penalized(Y, Psi_Y, lambda) ;
 
 % Minimization of the APURE unbiased estimation risk estimate
 [X_E, lambda_E, oracle_E] = APURE_Estimation(Y,Psi_Y,M) ;
+
 
 %% DISPLAY ORACLES AND ESTIMATED REPRODUCTION COEFFICIENTS
 

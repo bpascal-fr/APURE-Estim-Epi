@@ -22,11 +22,14 @@ opts_load.W               = 70;           % Length of the time period in weeks. 
 % Load data
 [Z, Phi_Z, M]             = load_JHU_Weekly(User_Country,opts_load);
 
+
 %% MAXIMUM LIKELIHOOD ESTIMATE
 
-X_MLE                     = X_MaxLikelihood(Z,Phi_Z) ; 
+X_ML                      = X_MaxLikelihood(Z,Phi_Z) ; 
+
 
 %% ESTIMATE THE REPRODUCTION COEFFICIENT THROUGH PIECEWISE LINEAR DENOISING 
+
 
 % Parameter of the APURE unbiased risk estimates  (see APURE_Prediction and APURE_Estimation documentation for more options)
 opts.N                    = 10 ; % number of Monte Carlo vectors of the robustified APURE estimates (default: 10)
@@ -36,6 +39,7 @@ opts.N                    = 10 ; % number of Monte Carlo vectors of the robustif
 
 % Minimization of the APURE unbiased estimation risk estimate
 [R_E, lambda_E, oracle_E] = APURE_Estimation(Z,Phi_Z,M,opts) ;
+
 
 %% DISPLAY ORACLES AND ESTIMATED REPRODUCTION COEFFICIENTS
 
