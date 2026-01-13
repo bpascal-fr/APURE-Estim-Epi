@@ -118,6 +118,18 @@ function [X, lambda, oracle] = APURE_Prediction(Y,Psi_Y,M,opts)
 
     end
 
+    %% STORE INITIAL COUNT
+
+    if isfield(M,'Y0')
+
+        Y_SY = [M.Y0,Y];
+        
+    else
+
+        Y_SY = [Y(1),Y];
+        
+    end
+
     %% NORMALIZE OBSERVATIONS AND MEMORY TERMS
 
     scale       = std(Y,[],2);   % scale of infection counts
@@ -182,7 +194,7 @@ function [X, lambda, oracle] = APURE_Prediction(Y,Psi_Y,M,opts)
     for n = 1 : opts.N
 
         % Sample the standard Gaussian Monte Carlo vector
-        dY_SY                = randn(size(M.Y_SY)) ;
+        dY_SY                = randn(size(Y_SY)) ;
         if isfield(M,'Psi')
             [dPsi_Y,dY]      = Psi_normal(dY_SY, M.Psi) ;
             dPsi_Z           = dPsi_Y / scale ;
